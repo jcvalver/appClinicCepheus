@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Clínica Cepheus</string>
+
+    <string name="login_toolbar_cepheus">Mundo Cepheus</string>
+    <string name="login_toolbar_map">Mi Mapa</string>
+    <string name="login_toolbar_help">Ayuda</string>
+    <string name="login_toolbar_setting">Configuración</string>
+
+    <!-- dimens Login-->
+    <string name="login_title">CLÍNICA CEPHEUS</string>
+    <string name="login_subtitle">La salud es primero</string>
+    <string name="login_username">DNI</string>
+    <string name="login_password">Clave</string>
+    <string name="login_button">Ingresar</string>
+    <string name="login_register">¿No tienes una Cuenta? Regístrate</string>
+
+    <!-- dimens Register-->
+    <string name="register_title">CLÍNICA CEPHEUS</string>
+    <string name="register_subtitle">La salud es primero</string>
+    <string name="register_full_name">Nombre Completo</string>
+    <string name="register_email">Email</string>
+    <string name="register_username">DNI</string>
+    <string name="register_password">Clave</string>
+    <string name="register_button">Registrar</string>
+    <string name="register_login">¿Ya tienes una cuenta? Ingresa</string>
+</resources>

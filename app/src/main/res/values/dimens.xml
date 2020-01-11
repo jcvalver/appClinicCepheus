@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- dimens Login-->
+    <dimen name="login_title_linear_layout_margin_left">25dp</dimen>
+    <dimen name="login_title_linear_layout_margin_right">25dp</dimen>
+    <dimen name="login_title_textSize">20sp</dimen>
+    <dimen name="login_subtitle_textSize">16sp</dimen>
+
+    <dimen name="login_input_group_linear_layout_margin_left">25dp</dimen>
+    <dimen name="login_input_group_linear_layout_margin_right">25dp</dimen>
+    <dimen name="login_input_group_linear_layout_margin_bottom">50dp</dimen>
+
+    <dimen name="login_input_group_username">15dp</dimen>
+    <dimen name="login_input_group_password">15dp</dimen>
+    <dimen name="login_input_group_button_margin_top">10dp</dimen>
+    <dimen name="login_input_group_button_textSize">17sp</dimen>
+    <dimen name="login_input_group_register_margin_top">3dp</dimen>
+    <dimen name="login_input_group_register_padding">10dp</dimen>
+    <dimen name="login_input_group_register_textSize">13dp</dimen>
+
+    <!-- dimens Register-->
+</resources>
