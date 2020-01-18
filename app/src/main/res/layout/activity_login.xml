@@ -100,6 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/login_input_group_register_margin_top"
             android:fontFamily="sans-serif"
+            android:onClick="onClick"
             android:padding="@dimen/login_input_group_register_padding"
             android:text="@string/login_register"
             android:textColor="#FFFFFF"

@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Clínica Cepheus</string>
+    <string name="user_name">jcvalver.devpta@gmail.com</string>
+    <string name="nav_open_drawer">Open navigation drawer</string>
+    <string name="nav_close_drawer">Close navigation drawer</string>
+    <string name="nav_support">Soporte</string>
 
     <string name="login_toolbar_cepheus">Mundo Cepheus</string>
     <string name="login_toolbar_map">Mi Mapa</string>
+    <string name="login_toolbar_benefits">Beneficios</string>
     <string name="login_toolbar_help">Ayuda</string>
     <string name="login_toolbar_setting">Configuración</string>
 
@@ -23,4 +28,10 @@
     <string name="register_password">Clave</string>
     <string name="register_button">Registrar</string>
     <string name="register_login">¿Ya tienes una cuenta? Ingresa</string>
+    <string name="register_toolbar_cepheus">Agregar PIN</string>
+
+    <string name="exception_message">deberia implementar FragmentInteractionListener</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

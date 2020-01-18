@@ -2,24 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_login_toolbar_cepheus"
-        android:title="@string/login_toolbar_cepheus"
-        app:showAsAction="never"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_login_toolbar_cepheus"
+            android:icon="@mipmap/menux16"
+            android:title="@string/login_toolbar_cepheus"
+            />
+
+        <item
+            android:id="@+id/action_login_toolbar_map"
+            android:icon="@mipmap/mapx16"
+            android:title="@string/login_toolbar_map"
+            />
+
+        <item
+            android:id="@+id/action_login_toolbar_benefits"
+            android:icon="@mipmap/benefitsx16"
+            android:title="@string/login_toolbar_benefits"
+            />
+
+    </group>
 
     <item
-        android:id="@+id/action_login_toolbar_map"
-        android:title="@string/login_toolbar_map"
-        app:showAsAction="never"/>
+        android:title="@string/nav_support">
+        <menu>
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@android:drawable/ic_menu_help"
+                android:title="@string/login_toolbar_help"
+                />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@mipmap/configx16"
+                android:title="@string/login_toolbar_setting"
+                />
+        </menu>
+    </item>
 
-    <item
-        android:id="@+id/action_login_toolbar_help"
-        android:title="@string/login_toolbar_help"
-        app:showAsAction="never"/>
-
-    <item
-        android:id="@+id/action_login_toolbar_setting"
-        android:title="@string/login_toolbar_setting"
-        app:showAsAction="never"/>
 
 </menu>

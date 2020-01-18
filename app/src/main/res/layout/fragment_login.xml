@@ -1,0 +1,71 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.cibertec.cliniccepheusapp.LoginFragment"
+
+    android:id="@+id/input_group"
+    android:layout_alignParentBottom="true"
+    android:layout_marginLeft="@dimen/login_input_group_linear_layout_margin_left"
+
+    android:layout_marginRight="@dimen/login_input_group_linear_layout_margin_right"
+    android:layout_marginBottom="@dimen/login_input_group_linear_layout_margin_bottom"
+    android:gravity="center_vertical|center_horizontal">
+
+    <ImageView
+        android:id="@+id/album_image"
+        android:layout_width="361dp"
+        android:layout_height="228dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:padding="60dp"
+        app:srcCompat="@drawable/images" />
+
+<EditText
+    android:id="@+id/txtUserName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_text_top"
+    android:hint="@string/login_username"
+    android:inputType="textPersonName"
+    android:padding="@dimen/login_input_group_username" />
+
+<EditText
+    android:id="@+id/txtPassword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/edit_text_bottom"
+    android:hint="@string/login_password"
+    android:inputType="textPassword"
+    android:padding="@dimen/login_input_group_password" />
+
+<Button
+    android:id="@+id/btnLogin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/login_input_group_button_margin_top"
+    android:background="@drawable/button"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:text="@string/login_button"
+    android:textAllCaps="false"
+    android:textColor="#FFFFFF"
+    android:textSize="@dimen/login_input_group_button_textSize" />
+
+<TextView
+    android:id="@+id/txtRegister"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/login_input_group_register_margin_top"
+    android:fontFamily="sans-serif"
+    android:padding="@dimen/login_input_group_register_padding"
+    android:onClick="onClick"
+    android:text="@string/login_register"
+    android:textColor="#FFFFFF"
+    android:textSize="@dimen/login_input_group_register_textSize"
+    android:textStyle="bold" />
+
+</LinearLayout>
