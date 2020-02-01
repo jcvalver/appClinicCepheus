@@ -3,12 +3,11 @@ package com.cibertec.cliniccepheusapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class UserApp implements Parcelable {
+public class User implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -18,16 +17,24 @@ public class UserApp implements Parcelable {
     private String documentDni;
     private String password;
 
-    public  UserApp(){
+    public User(){
 
     }
 
-    protected UserApp(Parcel in) {
-        this.id = in.readLong();
-        this.fullName = in.readString();
-        this.email = in.readString();
-        this.documentDni = in.readString();
-        this.password = in.readString();
+    protected User(Parcel in) {
+        this.setId(in.readLong());
+        this.setFullName(in.readString());
+        this.setEmail(in.readString());
+        this.setDocumentDni(in.readString());
+        this.setPassword(in.readString());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -62,15 +69,6 @@ public class UserApp implements Parcelable {
         this.password = password;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    @NonNull
     @Override
     public String toString() {
         return fullName;
@@ -90,15 +88,15 @@ public class UserApp implements Parcelable {
         dest.writeString(this.password);
     }
 
-    public static final Parcelable.Creator<UserApp> CREATOR = new Parcelable.Creator<UserApp>() {
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         @Override
-        public UserApp createFromParcel(Parcel source) {
-            return new UserApp(source);
+        public User createFromParcel(Parcel source) {
+            return new User(source);
         }
 
         @Override
-        public UserApp[] newArray(int size) {
-            return new UserApp[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 }

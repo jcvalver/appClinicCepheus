@@ -5,9 +5,11 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import com.cibertec.cliniccepheusapp.model.UserApp;
 
-@Database(entities = {UserApp.class}, version = 1)
+import com.cibertec.cliniccepheusapp.model.ReserveCita;
+import com.cibertec.cliniccepheusapp.model.User;
+
+@Database(entities = {User.class, ReserveCita.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -15,10 +17,12 @@ public abstract class AppDatabase extends RoomDatabase {
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(
-                    context, AppDatabase.class, "users").allowMainThreadQueries().build();
+                    context, AppDatabase.class, "CLINICPDB1").allowMainThreadQueries().build();
         }
         return instance;
     }
 
-    public abstract UserAppDAO userAppDao();
+    public abstract UserDAO userDao();
+
+    public abstract ReserveCitaDAO reserveCitaDAO();
 }

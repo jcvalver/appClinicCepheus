@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cibertec.cliniccepheusapp.model.UserApp;
+import com.cibertec.cliniccepheusapp.database.AppDatabase;
+import com.cibertec.cliniccepheusapp.database.UserDAO;
+import com.cibertec.cliniccepheusapp.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -27,12 +31,13 @@ import java.util.HashMap;
  */
 public class LoginFragment extends Fragment implements  View.OnClickListener{
 
-    private UserApp userApp;
+    private User userLogin;
 
     private EditText txtUserName, txtPassword;
     private TextView txtRegister;
     private Button btnLogin;
-
+    private static String titleFragment="";
+    private static final String TAG="LoginFragment";
     private static final String TITLE_KEY = "title";
     private static final String ERROR_USERNAME_KEY="errorUser",ERROR_PASSWORD_KEY="errorPassword";
     private static HashMap<String,String> messageError=new HashMap<>();
@@ -48,7 +53,9 @@ public class LoginFragment extends Fragment implements  View.OnClickListener{
         LoginFragment fragment=new LoginFragment();
 
         Bundle arguments=new Bundle();
-        arguments.putString(TITLE_KEY,title);
+        titleFragment=title;
+        Log.i(TAG,"title login 1 fragment:"+titleFragment);
+        arguments.putString(TITLE_KEY,titleFragment);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -93,79 +100,69 @@ public class LoginFragment extends Fragment implements  View.OnClickListener{
     private void checkLogin() {
         final String userName = txtUserName.getText().toString();
         final String pass = txtPassword.getText().toString();
-        String userNameBD,passBD;
-        userApp = getActivity().getIntent().getParcelableExtra("userapp");
 
-        if (userApp != null) {
-            userNameBD=userApp.getDocumentDni();
-            passBD=userApp.getPassword();
-            if (!isValidUserName(userName,userNameBD)) {
-                txtUserName.setError("Documento Inválido");
+            if (!isValidUserName(userName)|| !isValidPassword(pass)) {
+                txtUserName.setError(messageError.get(ERROR_USERNAME_KEY));
+                txtPassword.setError(messageError.get(ERROR_PASSWORD_KEY));
+            }else{
+                if(isValidateDB(userName,pass)){
+                    //Bundle datosAEnviar = new Bundle();
+                    // Aquí pon todos los datos que quieras en formato clave, valor
+                    //datosAEnviar.putLong("id", 123L);
+                    mListener.setOutSession(true);
+                    Fragment citasFragment = CitasFragment.newInstance(titleFragment,userLogin.getFullName());
+                    //fragmento.setArguments("datosAEnviar");
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.content_frame, citasFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    // Terminar transición y nos vemos en el fragmento de destino
+                    fragmentTransaction.commit();
+                }else{
+                    Toast.makeText(getActivity(),"Usuario No Existe", Toast.LENGTH_LONG).show();
+                }
             }
-
-            if (!isValidPassword(pass,passBD)) {
-                txtPassword.setError("Clave debe ser mayo a 6 caracteres");
-            }
-
-            if(isValidUserName(userName,userNameBD) && isValidPassword(pass,passBD))
-            {
-                //Bundle datosAEnviar = new Bundle();
-                // Aquí pon todos los datos que quieras en formato clave, valor
-                //datosAEnviar.putLong("id", 123L);
-                Fragment fragmento = new CitasFragment();
-                //fragmento.setArguments("datosAEnviar");
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_frame, fragmento);
-                fragmentTransaction.addToBackStack(null);
-
-                // Terminar transición y nos vemos en el fragmento de destino
-                fragmentTransaction.commit();
-            }
-        }
-
-
     }
 
-    private boolean isValidUserName(String userName,String userNameBD) {
+    private boolean isValidateDB(String userName, String pass) {
+        UserDAO userDAO = AppDatabase.getInstance(getContext()).userDao();
+        User usuarioActual=userDAO.getxUser(userName,pass);
+        if(usuarioActual!=null){
+            userLogin=usuarioActual;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean isValidUserName(String userName) {
 
         if(userName==null){
-            messageError.put(ERROR_USERNAME_KEY,"Usuario Inválido");
+            messageError.put(ERROR_USERNAME_KEY,"Usuario Vacio");
             return false;
+        }else {
+            if (userName.length() != 8) {
+                messageError.put(ERROR_USERNAME_KEY, "Usuario debe tener 8 digitos");
+                return false;
+            }
         }
-        if(!userName.equalsIgnoreCase(userNameBD)){
-            messageError.put(ERROR_USERNAME_KEY,"Usuario No Existe");
-            return false;
-        }
-
-        if (userName != null && userName.equalsIgnoreCase(userNameBD)) {
-            messageError.put(ERROR_USERNAME_KEY,"");
-            return true;
-        }
-        return false;
+        messageError.clear();
+        return true;
     }
 
-    private boolean isValidPassword(String pass, String passBD) {
+    private boolean isValidPassword(String pass) {
 
         if(pass==null){
-            messageError.put(ERROR_PASSWORD_KEY,"Password Inválido");
+            messageError.put(ERROR_PASSWORD_KEY,"Password Vacio");
             return false;
+        }else{
+            if(pass.length() < 6){
+                messageError.put(ERROR_PASSWORD_KEY,"Password debe ser mayor a 6 digitos");
+                return false;
+            }
         }
-
-        if(pass.length() < 6){
-            messageError.put(ERROR_PASSWORD_KEY,"Password debe ser mayor a 6 caracteres");
-            return false;
-        }
-
-        if(!pass.equalsIgnoreCase(passBD)){
-            messageError.put(ERROR_PASSWORD_KEY,"Password No Existe");
-            return false;
-        }
-        if (pass != null && pass.equalsIgnoreCase(passBD) ) {
-            messageError.put(ERROR_PASSWORD_KEY,"");
-            return true;
-        }
-        return false;
+        messageError.clear();
+        return true;
     }
 
     @Override
@@ -178,4 +175,5 @@ public class LoginFragment extends Fragment implements  View.OnClickListener{
                     + getResources().getString(R.string.exception_message));
         }
     }
+
 }

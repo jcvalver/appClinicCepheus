@@ -8,19 +8,28 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 
-import com.cibertec.cliniccepheusapp.model.UserApp;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FragmentInteractionListener{
+
+public class MainActivity extends AppCompatActivity implements FragmentInteractionListener,NavigationView.OnNavigationItemSelectedListener{
 
     ActionBarDrawerToggle toggle;
     Toolbar toolbar;
+    private static final String TAG="MainActivity";
+    private MenuItem mitemCloseSession;
+    private Menu menuToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +51,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        menuToolbar=navigationView.getMenu();
 
 
-        Fragment fragment = new LoginFragment();
+
+        Fragment fragment = LoginFragment.newInstance(getTitle().toString());
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.content_frame, fragment);
         ft.commit();
 
     }
-
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        toggle.syncState();// es necesario para renderizar el toogle tipo hamburguesa
-    }
-
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -68,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
            /* case R.id.nav_drafts:
                 fragment = new DraftsFragment();
                 break;*/
-           case R.id.action_login_toolbar_map:
+            case R.id.action_login_toolbar_map:
                 fragment=MapFragment.newInstance(getTitle().toString());
                 break;
             case R.id.action_login_toolbar_benefits:
@@ -80,7 +84,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_feedback:
                 intent = new Intent(this, FeedbackActivity.class);
                 break;*/
+            case R.id.action_login_toolbar_closeSession:
+                setOutSession(false);
+                fragment=LoginFragment.newInstance(getTitle().toString());
+
+                break;
             default:
+                Log.i(TAG,"title MainActivity:"+getTitle().toString());
                 fragment=LoginFragment.newInstance(getTitle().toString());
         }
 
@@ -99,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();// es necesario para renderizar el toogle tipo hamburguesa
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -110,8 +126,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+
     @Override
     public void setToolBarTitle(String title) {
         toolbar.setTitle(title);
+
     }
+
+   @Override
+   public void setOutSession(boolean state) {
+        if(state){
+            mitemCloseSession=menuToolbar.findItem(R.id.action_login_toolbar_closeSession);
+            if(mitemCloseSession!=null)mitemCloseSession.setVisible(true);
+        }else
+        {
+            mitemCloseSession=menuToolbar.findItem(R.id.action_login_toolbar_closeSession);
+            if(mitemCloseSession!=null)mitemCloseSession.setVisible(false);
+            toolbar.setTitle(getTitle());
+        }
+    }
+
+
 }
